@@ -68,8 +68,15 @@ export const TodoApp: React.FC = () => {
   const updateHandler = (todoId: number, title?: string) => {
     const indexCurrentTodo = todos.findIndex(todo => todo.id === todoId);
     const data = title
-      ? { title }
+      ? { title: title.trim() }
       : { completed: !todos[indexCurrentTodo].completed };
+
+    if (title && !title.trim()) {
+      setTypeError(TypeError.TitleIsEmpty);
+      setTextError(TypeError.TitleIsEmpty);
+
+      return;
+    }
 
     setTypeError('');
     setIdTodosLoading([todoId]);
@@ -110,7 +117,8 @@ export const TodoApp: React.FC = () => {
   };
 
   const addHandler = () => {
-    if (!titleTodo) {
+    if (!titleTodo.trim()) {
+      setTitleTodo('');
       setTypeError(TypeError.TitleIsEmpty);
       setTextError(TypeError.TitleIsEmpty);
 
@@ -119,7 +127,7 @@ export const TodoApp: React.FC = () => {
 
     const data = {
       userId: USER_ID,
-      title: titleTodo,
+      title: titleTodo.trim(),
       completed: false,
     };
 

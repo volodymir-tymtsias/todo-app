@@ -38,6 +38,11 @@ export const TodoItem: React.FC<Props> = ({
   const submitUpdetedTitle = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     updateHandler();
+    if (!newTitle.trim()) {
+      setNewTitle(todo.title);
+    } else {
+      setNewTitle(newTitle.trim());
+    }
   };
 
   const newTitleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
